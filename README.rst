@@ -8,9 +8,12 @@ problems.  And as soon as I tried to use them in combination with the excellent
 `Crispy Forms`_ I found yet more problems.
 
 Googling and StackOverflow both showed that lots (and I mean *lots*) of people
-were having very similar problems, but no one appears to have tacked it in a
-generic and repeatable way.  In addition, rightly or wrongly, some maintainers
-have referred to use of formsets as "an edgecase" (wrongly, in my view).
+were having very similar problems, but no one appears to have tackled it in a
+generic and repeatable way.  In addition, rightly or wrongly, some projects
+have referred to the use of formsets as "an edgecase" and have deliberately
+exclude considering them.  This simplifies the project, but often means that
+not only are they not considered, they're nigh on impossible to implement within
+that framework.
 
 This project attempts to resolve some of those problems.
 
