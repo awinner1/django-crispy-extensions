@@ -13,6 +13,7 @@ __docformat__ = 'restructuredtext en'
 from django.http import HttpResponseRedirect
 from django.views.generic.edit import ModelFormMixin
 
+
 class ModelFormFormsetMixin(ModelFormMixin):
     """
     We add our crispy formsets to a ModelForm CBV
