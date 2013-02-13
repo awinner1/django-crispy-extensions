@@ -16,7 +16,7 @@ from django.forms.formsets import DELETION_FIELD_NAME
 from django.template import Context
 from django.template.loader import render_to_string
 
-from crispy_forms.helpers import render_field
+from crispy_forms.utils import render_field
 
 
 TEMPLATE_PACK = getattr(settings, 'CRISPY_TEMPLATE_PACK', 'bootstrap')
