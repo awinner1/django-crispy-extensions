@@ -14,8 +14,10 @@ from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.forms.formsets import DELETION_FIELD_NAME
 from django.template import Context
+from django.template import Template
 from django.template.loader import render_to_string
 
+from crispy_forms.utils import flatatt
 from crispy_forms.utils import render_field
 
 
@@ -191,3 +193,37 @@ class InlineTabularForm(GenericContainer):
                 template_map[DELETION_FIELD_NAME] = 'crispy_extensions/formset-delete-button.html'
             kwargs['template_map'] = template_map
         return super(InlineTabularForm, self).__init__(*fields, **kwargs)
+
+
+class ProperButton(object):
+    """
+    Crispy Forms renders layout.Button as <input type="button" />
+    We want the <button> tag.
+    """
+    template = "crispy_extensions/button.html"
+    input_type = 'button'
+    field_classes = ''
+    
+    def __init__(self, name, value, contents, **kwargs):
+        self.name = name
+        self.value = value
+        self.contents = contents
+        self.id = kwargs.pop('css_id', '')
+        self.input_type = kwargs.pop('input_type', self.input_type)
+        self.attrs = {}
+
+        if kwargs.has_key('css_class'):
+            self.field_classes += ' %s' % kwargs.pop('css_class')
+
+        self.template = kwargs.pop('template', self.template)
+        self.flat_attrs = flatatt(kwargs)
+
+    def render(self, form, form_style, context, template_pack=TEMPLATE_PACK):
+        """
+        Renders an `<input />` if container is used as a Layout object.
+        Input button value can be a variable in context.
+        """
+        self.value = Template(unicode(self.value)).render(context)
+        return render_to_string(self.template, Context({'input': self}))
+
+
